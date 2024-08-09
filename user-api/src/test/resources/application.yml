@@ -6,10 +6,10 @@ spring:
       okhttp:
         enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/commerce?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1
+    url: jdbc:h2:file:/Users/hidongmin37/mem-data.mv.db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     show-sql: true
     hibernate:
@@ -19,3 +19,5 @@ spring:
 server:
   port: 8081
 
+mailgun:
+  key: test-mailgun-key
