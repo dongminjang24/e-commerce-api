@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: user-api
+  cloud:
+    openfeign:
+      okhttp:
+        enabled: true
+
+
+
+
+server:
+  port: 8081
+
