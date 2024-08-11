@@ -23,6 +23,10 @@ public class SignUpApplication {
 
 	private final SignUpCustomerService signUpCustomerService;
 
+	public void customerVerify(String email,String code) {
+		signUpCustomerService.verifyEmail(email,code);
+	}
+
 	public String customerSignUp(SignUpForm form) {
 		if (!signUpCustomerService.isEmailExists(form.getEmail())) {
 			Customer customer = signUpCustomerService.signUp(form);
@@ -52,7 +56,7 @@ public class SignUpApplication {
 		return builder.append("Hello ")
 			.append(name)
 			.append("! Please Click Link for verification. \n\n")
-			.append("http://localhost:8080/customer/signup/verify?email=")
+			.append("http://localhost:8081/signup/verify/customer?email=")
 			.append(email)
 			.append("&code=")
 			.append(code)

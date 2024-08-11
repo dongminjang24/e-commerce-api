@@ -30,6 +30,26 @@ public class SignUpCustomerService {
 	}
 
 	@Transactional
+	public void verifyEmail(String email, String code) {
+		Customer customer = customerRepository.findByEmail(email)
+			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+		if (customer.isVerify()) {
+			throw new CustomException(ErrorCode.ALREADY_VERIFIED_USER);
+		}
+
+		if (!customer.getVerificationCode().equals(code)) {
+			throw new CustomException(ErrorCode.WRONG_VERIFICATION);
+		}
+
+		if (customer.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
+			throw new CustomException(ErrorCode.EXPIRED_VERIFICATION_CODE);
+		}
+
+		customer.setVerify(true);
+
+	}
+
+	@Transactional
 	public LocalDateTime ChangeCustomerValidateEmail(Long customerId,String verificationCode) {
 		Optional<Customer> customer = customerRepository.findById(customerId);
 
