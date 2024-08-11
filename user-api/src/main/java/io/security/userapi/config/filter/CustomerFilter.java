@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import io.security.commercedomain.common.UserVo;
 import io.security.commercedomain.config.JwtAuthenticationProvider;
-import io.security.userapi.service.CustomerService;
+import io.security.userapi.service.customer.CustomerService;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

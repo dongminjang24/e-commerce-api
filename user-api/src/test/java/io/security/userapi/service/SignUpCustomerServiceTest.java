@@ -1,7 +1,5 @@
 package io.security.userapi.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 
 import org.assertj.core.api.Assertions;
@@ -11,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import io.security.userapi.domain.SignUpForm;
 import io.security.userapi.domain.model.Customer;
+import io.security.userapi.service.customer.SignUpCustomerService;
 
 @SpringBootTest
 class SignUpCustomerServiceTest {

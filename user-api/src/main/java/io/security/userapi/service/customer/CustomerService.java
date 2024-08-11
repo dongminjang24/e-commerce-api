@@ -1,4 +1,4 @@
-package io.security.userapi.service;
+package io.security.userapi.service.customer;
 
 import java.util.Optional;
 
