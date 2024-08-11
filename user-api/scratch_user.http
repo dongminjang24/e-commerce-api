@@ -1,0 +1,70 @@
+### 회원가입 (고객)
+POST http://localhost:8081/signup/customer
+Content-Type: application/json
+
+{
+  "birth": "1997-02-24",
+  "email": "jangdm37@gmail.com",
+  "name": "string",
+  "password": "pw",
+  "phone": "010-0000-0000"
+}
+
+### 이메일 인증(고객)
+GET http://localhost:8081/signup/customer/verify?email=jangdm37@gmail.com&code=D2tTdT1kGD
+
+### 로그인 (고객)
+POST http://localhost:8081/singIn/customer
+Content-Type: application/json
+
+{
+  "email": "jangdm37@gmail.com",
+  "password": "pw"
+}
+
+### 회원 정보 조회 (고객)
+### eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIvTVRtTVFIWTdzMDdUNTJCWkx5SGlzL1I5SDhHVXVlUzZPUWROVWtPOXc0PSIsImp0aSI6ImZ1am80NEhzSzlIQWt0ZUxrUStRRmc9PSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE2NjkzNjIzOTEsImV4cCI6MTY2OTQ0ODc5MX0.OGE8Qi9eRBO2lBhnSwlZeFrPhLcFKFElXi0snSnU6nE
+GET http://localhost:8081/customer/getInfo
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKSENJa1BGY1dkT3NlMkN3bm5MaXZsem9EOE1PZmo1K1B0UFBLbDM3K3RvPSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJqdGkiOiJJaTUvZXl4QUpPQVF1MExxaEZZa0xRPT0iLCJpYXQiOjE3MjMzODA2OTMsImV4cCI6MTcyMzM4MDY5M30.c29sntFvXlXlo4_HX0Yc7zw2AN7g-z7OKLAneTIw2Wk
+
+
+
+### 잔액 변경 (고객)
+POST http://localhost:8081/customer/balance
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKSENJa1BGY1dkT3NlMkN3bm5MaXZsem9EOE1PZmo1K1B0UFBLbDM3K3RvPSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJqdGkiOiJJaTUvZXl4QUpPQVF1MExxaEZZa0xRPT0iLCJpYXQiOjE3MjMzODA2OTMsImV4cCI6MTcyMzM4MDY5M30.c29sntFvXlXlo4_HX0Yc7zw2AN7g-z7OKLAneTIw2Wk
+
+{
+  "from": "server",
+  "message" : "잔액변경",
+  "money": 49000
+}
+
+####################
+
+### 회원가입 (셀러)
+POST http://localhost:8081/signup/seller
+Content-Type: application/json
+
+{
+  "birth": "1997-02-24",
+  "email": "jangdm37@gmail.com",
+  "name": "string",
+  "password": "pw",
+  "phone": "010-0000-0000"
+}
+
+### 이메일 인증(셀러)
+GET http://localhost:8081/signup/seller/verify?email=honee85832@gmail.com&code=GnGcUcqtLT
+
+### 로그인 (셀러)
+POST http://localhost:8081/signIn/seller
+Content-Type: application/json
+
+{
+  "email": "jangdm37@gmail.com",
+  "password": "pw"
+}
+
+
