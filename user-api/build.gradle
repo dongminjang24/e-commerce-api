@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.commerce'
+group = 'com.commerce.user'
 version = '0.0.1-SNAPSHOT'
 
 
@@ -12,36 +12,36 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+	dependencies {
+		implementation project(':commerce-domain')
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		runtimeOnly 'com.mysql:mysql-connector-j'
+		compileOnly 'org.projectlombok:lombok'
+		runtimeOnly 'com.h2database:h2'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+		implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.1.0'
+		implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
+		testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
+		testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
+
+		implementation 'org.springframework.data:spring-data-envers'
+
+		testCompileOnly 'com.h2database:h2'
+
+
+		implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.16.0' // 랜덤문자
+
+	}
 }
 
 repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation project(':commerce-domain')
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.1.0'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
-
-	implementation 'org.springframework.data:spring-data-envers'
-
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	testCompileOnly 'com.h2database:h2'
-
-	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
-	testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
-
-	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.16.0' // 랜덤문자
-
-}
 
 tasks.named('test') {
 	useJUnitPlatform()
