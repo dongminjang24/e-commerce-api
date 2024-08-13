@@ -1,11 +1,13 @@
 package com.commerce.orderapi.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.commerce.commercedomain.config.JwtAuthenticationProvider;
@@ -62,6 +64,23 @@ public class SellerProductController {
 
 
 
+
+	@DeleteMapping
+	public ResponseEntity<Void> deleteProduct(
+		@RequestHeader("X-AUTH-TOKEN") String token,
+		@RequestParam Long id) {
+		Long sellerId = jwtAuthenticationProvider.getUserVo(token).getId();
+		productService.deleteProduct(sellerId, id);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/item")
+	public ResponseEntity<Void> deleteProductItem(
+		@RequestHeader(name = "X-AUTH-TOKEN") String token,
+		@RequestParam Long id) {
+		productItemService.deleteProductItem(jwtAuthenticationProvider.getUserVo(token).getId(), id);
+		return ResponseEntity.ok().build();
+	}
 
 
 
