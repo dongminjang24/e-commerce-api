@@ -1,10 +1,12 @@
 package com.commerce.orderapi.domain.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.commerce.orderapi.domain.model.Product;
 import com.commerce.orderapi.domain.model.ProductItem;
 import com.commerce.orderapi.domain.product.AddProductItemForm;
+import com.commerce.orderapi.domain.product.UpdateProductItemForm;
 import com.commerce.orderapi.domain.repository.ProductItemRepository;
 import com.commerce.orderapi.domain.repository.ProductRepository;
 import com.commerce.orderapi.exception.CustomException;
@@ -19,6 +21,7 @@ public class ProductItemService {
 	private final ProductRepository productRepository;
 	private final ProductItemRepository productItemRepository;
 
+	@Transactional
 	public Product addProductItem(Long sellerId, AddProductItemForm form) {
 		Product product = productRepository.findBySellerIdAndId(sellerId, form.getProductId())
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
@@ -29,5 +32,17 @@ public class ProductItemService {
 		ProductItem productItem = ProductItem.of(sellerId, form);
 		product.getProductItems().add(productItem);
 		return product;
+	}
+
+	@Transactional
+	public ProductItem updateProductItem(Long sellerId, UpdateProductItemForm form) {
+		ProductItem productItem = productItemRepository.findById(form.getId())
+			.filter(item -> !item.getSellerId().equals(sellerId))
+			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT_ITEM));
+
+		productItem.setName(form.getName());
+		productItem.setCount(form.getPrice());
+		productItem.setPrice(form.getPrice());
+		return productItem;
 	}
 }
