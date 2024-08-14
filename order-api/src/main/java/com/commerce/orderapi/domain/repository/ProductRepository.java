@@ -10,13 +10,15 @@ import org.springframework.stereotype.Repository;
 import com.commerce.orderapi.domain.model.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, RevisionRepository<Product, Long, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Long> , ProductRepositoryCustom{
 
 	@EntityGraph(attributePaths = "productItems",type = EntityGraph.EntityGraphType.LOAD)
 	Optional<Product> findWithProductItemsById(Long id);
 
 	@EntityGraph(attributePaths = "productItems",type = EntityGraph.EntityGraphType.LOAD)
 	Optional<Product> findBySellerIdAndId(Long id, Long sellerId);
+
+
 
 
 }

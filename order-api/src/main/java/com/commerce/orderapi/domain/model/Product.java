@@ -43,6 +43,7 @@ public class Product extends BaseEntity {
 
 	private String description;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
 	private List<ProductItem> productItems = new ArrayList<>();
 

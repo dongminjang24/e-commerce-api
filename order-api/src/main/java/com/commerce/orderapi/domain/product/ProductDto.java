@@ -36,4 +36,13 @@ public class ProductDto {
 				.items(list)
 				.build();
 	}
+	public static ProductDto withoutItemsFrom(Product product) {
+
+
+		return ProductDto.builder()
+			.id(product.getId())
+			.name(product.getName())
+			.description(product.getDescription())
+			.build();
+	}
 }
