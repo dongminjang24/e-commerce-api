@@ -14,6 +14,8 @@ public enum ErrorCode {
 	NOT_FOUND_PRODUCT_ITEM(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
 	CANT_ADD_PRODUCT(HttpStatus.NOT_FOUND, "장바구니에 추가할 수 없습니니다."),
 	ITEM_COUNT_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "상품의 수량이 부족합니다."),
+	ORDER_FAIL_CHECK_CART(HttpStatus.BAD_REQUEST, "주문이 불가능합니다."),
+	ORDER_FAIL_NOT_ENOUGH_BALANCE(HttpStatus.BAD_REQUEST, "주문이 불가능합니다. 잔액 부족합ㄴ디ㅏ"),
 	;
 
 

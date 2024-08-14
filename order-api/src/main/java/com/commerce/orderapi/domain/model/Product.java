@@ -2,11 +2,13 @@ package com.commerce.orderapi.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 
 import com.commerce.orderapi.domain.product.AddProductForm;
+import com.commerce.orderapi.domain.product.UpdateProductForm;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,18 +23,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Setter
+@Entity
 @Getter
 @Builder
+@ToString(exclude = "productItems")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Audited
 @AuditOverride(forClass = BaseEntity.class)
-@Table(name = "product")
-public class Product extends BaseEntity {
-
+public class Product extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,18 +44,24 @@ public class Product extends BaseEntity {
 
 	private String description;
 
-	@Builder.Default
-	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id")
 	private List<ProductItem> productItems = new ArrayList<>();
 
 	public static Product of(Long sellerId, AddProductForm form) {
 		return Product.builder()
-				.sellerId(sellerId)
-				.name(form.getName())
-				.description(form.getDescription())
-				.productItems(form.getItems().stream()
-						.map(item -> ProductItem.of(sellerId, item))
-						.toList())
-				.build();
+			.sellerId(sellerId)
+			.name(form.getName())
+			.description(form.getDescription())
+			.productItems(
+				form.getItems().stream().map(pi -> ProductItem.of(sellerId, pi))
+					.collect(Collectors.toList())
+			)
+			.build();
+	}
+
+	public void updateProduct(UpdateProductForm form) {
+		this.name = form.getName();
+		this.description = form.getDescription();
 	}
 }

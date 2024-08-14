@@ -1,5 +1,6 @@
 package com.commerce.orderapi.domain.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -19,6 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> , Produc
 	Optional<Product> findBySellerIdAndId(Long id, Long sellerId);
 
 
+	@EntityGraph(attributePaths = {"productItems"}, type = EntityGraph.EntityGraphType.LOAD)
+	List<Product> findAllByIdIn(List<Long> ids);
 
 
 }

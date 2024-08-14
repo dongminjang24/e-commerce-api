@@ -1,5 +1,7 @@
 package com.commerce.orderapi.domain.service;
 
+import static com.commerce.orderapi.exception.ErrorCode.*;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,40 +23,43 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 	private final ProductRepository productRepository;
 
+	/**
+	 * 상품 추가
+	 */
 	@Transactional
 	public Product addProduct(Long sellerId, AddProductForm form) {
 		return productRepository.save(Product.of(sellerId, form));
 	}
 
+	/**
+	 * 상품 수정
+	 */
 	@Transactional
 	public Product updateProduct(Long sellerId, UpdateProductForm form) {
 		Product product = productRepository.findBySellerIdAndId(sellerId, form.getId())
-				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
-		product.setName(form.getName());
-		product.setDescription(form.getDescription());
-		List<UpdateProductItemForm> items = form.getItems();
-		for (UpdateProductItemForm item : items) {
-			ProductItem productItem1 = product.getProductItems()
-				.stream()
-				.filter(productItem -> productItem.getId().equals(item.getId()))
-				.findFirst()
-				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT_ITEM));
+			.orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
 
-			productItem1.setName(item.getName());
-			productItem1.setPrice(item.getPrice());
-			productItem1.setCount(item.getCount());
+		product.updateProduct(form);
 
+		for (UpdateProductItemForm itemForm : form.getItems()) {
+			ProductItem item = product.getProductItems().stream()
+				.filter(pi -> pi.getId().equals(itemForm.getId()))
+				.findFirst().orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
+
+			item.updateItem(itemForm);
 		}
+
 		return product;
 	}
 
+	/**
+	 * 상품 삭제
+	 */
 	@Transactional
-	public void deleteProduct(Long sellerId, Long productId) {
+	public void deleteProduct(Long sellerId,Long productId) {
 		Product product = productRepository.findBySellerIdAndId(sellerId, productId)
-				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
-		productRepository.delete(product);
+			.orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
+
+		productRepository.delete(product);  // cascade 설정 때문에 하위 엔티티도 같이 삭제
 	}
-
-
-
 }
